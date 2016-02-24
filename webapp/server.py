@@ -10,18 +10,6 @@ app = Flask(__name__)
 
 bot = Bot()
 
-@app.route('/')
-def index():
-    return bot.start()
-
-@app.route('/robot/api/v1.0/start', methods=['POST'])
-def bot_start():
-	bot.start()
-
-@app.route('/robot/api/v1.0/stop', methods=['POST'])
-def bot_stop():
-	bot.stop()
-
 @app.route('/robot/api/v1.0/move', methods=['POST'])
 def run_command():
 	if not request.json or not 'ch' in request.json:
@@ -30,7 +18,7 @@ def run_command():
 	logging.debug('Received command %s' %ch)
 	bot.move(ch)
 
-@app.route('/'):
+@app.route('/')
 def index():
     return render_template('index.html')
 
