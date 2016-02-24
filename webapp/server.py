@@ -11,9 +11,6 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
-bot = Bot(logger = app.logger)
-bot.start()
-print '***********SUMOBOT INITIATED***********'
 
 
 @app.route('/robot/api/v1.0/stop', methods=['GET'])
@@ -50,17 +47,25 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
+
     formatter = logging.Formatter("[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
-    handler = RotatingFileHandler('bot.log', maxBytes=10000000, backupCount=5)
-    handler.setLevel(logging.DEBUG)
+    handler = RotatingFileHandler('log/bot.log', maxBytes=10000000, backupCount=5)
     handler.setFormatter(formatter)
+
     app.logger.addHandler(handler)
+    app.logger.setLevel(logging.INFO)
+
+    log = logging.getLogger('werkzeug')
+    log.addHandler(handler)
+    log.setLevel(logging.INFO)
+
     try:
+        bot = Bot(logger = app.logger)
         bot.start()
-        print '***********STARTED SUMOBOT***********'
+        app.logger.info('***********STARTED SUMOBOT***********')
         app.run(host='0.0.0.0', port=8080, debug=False)
     finally:
         bot.stop()
         GPIO.cleanup()
-        print '***********STOPPED SUMOBOT***********'
+        app.logger.info('***********STOPPED SUMOBOT***********')
 
