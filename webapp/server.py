@@ -39,6 +39,10 @@ def run_command():
     resp = Response({}, status=200, mimetype='application/json')
     return resp
 
+@app.route('/hangout.xml')
+def index():
+    return render_template('hangout.xml')
+
 @app.route('/')
 def index():
     return render_template('index.html')
