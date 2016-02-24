@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Flask
+from flask import Flask,render_template
 from bot import Bot
 from flask import request
 
@@ -25,7 +25,7 @@ def run_command():
 
 @app.route('/')
 def index():
-	return "Hello from Sumo Tele Presence Bot"
+    return render_template('index.html')
 
 if __name__ == '__main__':
 	app.run(port=8080, debug=True)
