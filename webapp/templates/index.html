@@ -8,7 +8,17 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 	<div class="g-hangout" data-render="createhangout"></div>
 	<h1>
-		Press w(up) a(left) s(down) d(right)
+		Bot
+		'W': forward,
+        'S': backward,
+        'A': left,
+        'D': right,
+
+        Camera
+		'w': up,
+		's': down,
+		'a': left,
+		'd': right
 	</h1>
 </body>
 <script type="text/javascript">
@@ -19,6 +29,10 @@
 			'97' : "a", 
 			'115': "s", 
 			'100' : "d"
+			"87" : "W",
+			"83" : "S",
+			"65" : "A",
+			"68" : "D"
 		}
 		console.log(e.keyCode)
 		if(keyMapping[e.keyCode]){
