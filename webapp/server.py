@@ -1,6 +1,6 @@
 #/usr/bin/python
 
-from flask import Flask
+from flask import Flask,render_template
 from bot import Bot
 from flask import request
 
