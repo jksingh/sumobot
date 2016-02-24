@@ -37,7 +37,7 @@
 		console.log(e.keyCode)
 		if(keyMapping[e.keyCode]){
 			$.ajax({
-				url: "http://113.193.254.58/robot/api/v1.0/move",
+				url: "/robot/api/v1.0/move",
 				type: "POST",
 				data: {ch : keyMapping[e.keyCode]}
 			}).done(function(response) {
