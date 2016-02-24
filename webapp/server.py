@@ -12,7 +12,7 @@ from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
 
-bot = Bot()
+bot = Bot(logger = app.logger)
 
 @app.route('/robot/api/v1.0/stop', methods=['GET'])
 def bot_stop():
@@ -46,7 +46,7 @@ def index():
 if __name__ == '__main__':
 
     formatter = logging.Formatter("[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
-    handler = RotatingFileHandler('log/bot.log', maxBytes=10000000, backupCount=5)
+    handler = RotatingFileHandler('bot.log', maxBytes=10000000, backupCount=5)
     handler.setLevel(logging.DEBUG)
     handler.setFormatter(formatter)
     app.logger.addHandler(handler)
@@ -57,3 +57,4 @@ if __name__ == '__main__':
     finally:
         bot.stop()
         GPIO.cleanup()
+

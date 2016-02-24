@@ -10,7 +10,8 @@ import logging
 class Bot:
     'Controls bot'
 
-    def __init__(self):
+    def __init__(self, logger = logging):
+        self.logger = logger
         self.servo = Servo()
         self.dcMotor = DCMotor()
         self.moveFuncs = {
@@ -23,7 +24,8 @@ class Bot:
             'a': self.dcMotor.left,
             'd': self.dcMotor.right
         }
-        
+        self.logger.info('bot created')
+
     def start(self):
         self.servo.start()
 
@@ -31,7 +33,7 @@ class Bot:
         self.servo.stop()
 
     def move(self, ch):
-        logging.debug('bot move %s' %ch)
+        self.logger.info('bot move %s' %ch)
         func = self.moveFuncs.get(ch, lambda: 'Unknown %s' %ch)
         return func()
 
@@ -49,10 +51,9 @@ class Bot:
             while(ch != 'Q'):
                 self.move(ch)
                 ch = readchar.readchar()
-                
-        finally: 
+        finally:
             self.stop()
-    
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
