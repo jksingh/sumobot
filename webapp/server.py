@@ -11,8 +11,10 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
-
 bot = Bot(logger = app.logger)
+bot.start()
+print '***********SUMOBOT INITIATED***********'
+
 
 @app.route('/robot/api/v1.0/stop', methods=['GET'])
 def bot_stop():
@@ -40,7 +42,7 @@ def run_command():
     return resp
 
 @app.route('/hangout.xml')
-def index():
+def hangoutXml():
     return render_template('hangout.xml')
 
 @app.route('/')
@@ -48,17 +50,17 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-
     formatter = logging.Formatter("[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
     handler = RotatingFileHandler('bot.log', maxBytes=10000000, backupCount=5)
     handler.setLevel(logging.DEBUG)
     handler.setFormatter(formatter)
     app.logger.addHandler(handler)
-
     try:
         bot.start()
+        print '***********STARTED SUMOBOT***********'
         app.run(host='0.0.0.0', port=8080, debug=False)
     finally:
         bot.stop()
         GPIO.cleanup()
+        print '***********STOPPED SUMOBOT***********'
 
