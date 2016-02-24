@@ -25,6 +25,12 @@ class Servo:
         self.pwm.start(self.position)
         logging.debug('servo started')
 
+    def setFineMovement(self):
+        self.step = 0.25
+
+    def setCoarseMovement(self):
+        self.step = 0.5
+        
     def up(self):
         if(self.position <= self.endPosition):
             self.position = self.position + self.step

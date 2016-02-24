@@ -35,6 +35,12 @@ class Bot:
         func = self.moveFuncs.get(ch, lambda: 'Unknown %s' %ch)
         return func()
 
+    def setServoFine(self):
+        self.servo.setFineMovement()
+
+    def setServoCoarse(self):
+        self.servo.setCoarseMovement()
+
     def test(self):
         'Testing bot'
         try:
