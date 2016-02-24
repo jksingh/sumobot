@@ -22,6 +22,7 @@
 	</h1>
 </body>
 <script type="text/javascript">
+	var moveFlag = true;
 	$(document).on("keypress", function (e) {
 		// w = 87, a = 65, s = 83, d = 68
 		var keyMapping = {
@@ -34,14 +35,14 @@
 			"65" : "A",
 			"68" : "D"
 		}
-		console.log(e.keyCode)
-		if(keyMapping[e.keyCode]){
+		if(keyMapping[e.keyCode] && moveFlag){
+			moveFlag = false;
 			$.ajax({
 				url: "/robot/api/v1.0/move",
 				type: "POST",
 				data: {ch : keyMapping[e.keyCode]}
 			}).done(function(response) {
-				console.log(response)
+				moveFlag = true;
 			});
 		}
 	});
