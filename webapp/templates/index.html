@@ -2,7 +2,7 @@
 <html>
 	<head>
 	<title>HangoutBot</title>
-	<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 	</head>
 <body>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -40,10 +40,14 @@
 			$.ajax({
 				url: "/robot/api/v1.0/move",
 				type: "POST",
-				data: {ch : keyMapping[e.keyCode]}
-			}).done(function(response) {
-				moveFlag = true;
-			});
+				data: {ch : keyMapping[e.keyCode]},
+				success: function(data){
+					moveFlag = true;
+				},
+				error: function(data){
+					moveFlag = true;
+				}
+			})
 		}
 	});
 </script>
