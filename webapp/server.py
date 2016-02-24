@@ -1,4 +1,4 @@
-#/usr/bin/python
+#!/usr/bin/python
 
 from flask import Flask
 from bot import Bot
@@ -9,10 +9,6 @@ import logging
 app = Flask(__name__)
 
 bot = Bot()
-
-@app.route('/')
-def index():
-    return bot.start()
 
 @app.route('/robot/api/v1.0/start', methods=['POST'])
 def bot_start():
@@ -30,9 +26,9 @@ def run_command():
 	logging.debug('Received command %s' %ch)
 	bot.move(ch)
 
-@app.route('/'):
+@app.route('/')
 def index():
 	return "Hello from Sumo Tele Presence Bot"
-	
+
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=8080, debug=True)
