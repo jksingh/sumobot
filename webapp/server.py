@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-from flask import Flask,render_template
+from flask import Flask,render_template, abort
 from bot import Bot
-from flask import request
+from flask import request, Response
 
 import logging
 
@@ -17,15 +17,17 @@ def bot_stop():
 
 @app.route('/robot/api/v1.0/move', methods=['POST'])
 def run_command():
-	if not request.json or not 'ch' in request.json:
+	if not request.form or not 'ch' in request.form:
 		abort(400)
-	ch = request.json['ch']
+	ch = request.form['ch']
 	logging.debug('Received command %s' %ch)
 	bot.move(ch)
+        resp = Response({}, status=200, mimetype='application/json')
+        return resp
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-	app.run(port=8080, debug=True)
+	app.run(host='0.0.0.0', port=8080, debug=True)
