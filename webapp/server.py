@@ -4,8 +4,8 @@ from flask import Flask,render_template, abort
 from flask import request, Response
 from OpenSSL import SSL
 context = SSL.Context(SSL.SSLv23_METHOD)
-context.use_privatekey_file('/home/pi/sumobot/webapp/hangout.key')
-context.use_certificate_file('/home/pi/sumobot/webapp/hangout.crt')
+context.use_privatekey_file('./hangout.key')
+context.use_certificate_file('./hangout.cert')
 
 from bot import Bot
 import RPi.GPIO as GPIO
