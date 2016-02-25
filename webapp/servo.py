@@ -1,11 +1,12 @@
 import RPi.GPIO as GPIO
-import time
+import sched, time
 import logging
+import threading
 
 class Servo:
     'Controls servo motor'
 
-    def __init__(self):
+    def __init__(self, logger = logging):
 
         # constants
         self.pin = 40
@@ -14,41 +15,71 @@ class Servo:
         self.frontPosition = 5
         self.step = 0.5
         self.wait = 0.5
+        self.sleepAfter = 5
 
         self.position = self.frontPosition
 
+        self.logger = logger
+
+        self.operationCount = 0
+        self.stopped = True
+        self.rlock = threading.RLock()
+
+        self.schedulerThread = threading.Thread(name='AutoStop', target = self.__autoStop, args = ())
+        self.schedulerThread.setDaemon(True)
+        self.schedulerThread.start()
+        self.logger.info('servo initiated')
+
+    def __autoStop(self):
+        try:
+            time.sleep(self.sleepAfter)
+            self.logger.info('servo autostop')
+            self.stop()
+        except:
+            pass
+        self.__autoStop()
+
     def start(self):
         'Call before any motion'
-        GPIO.setmode(GPIO.BOARD)
-        GPIO.setup(self.pin, GPIO.OUT)
-        self.pwm=GPIO.PWM(self.pin, 50)
-        self.pwm.start(self.position)
-        logging.debug('servo started')
+        with self.rlock:
+            if(self.stopped):
+                GPIO.setmode(GPIO.BOARD)
+                GPIO.setup(self.pin, GPIO.OUT)
+                self.pwm=GPIO.PWM(self.pin, 50)
+                self.pwm.start(self.position)
+                self.stopped = False
+                self.logger.info('servo started')
+
+    def stop(self):
+        'Call after if motion is no longer required'
+        with self.rlock:
+            if(self.stopped == False):
+                self.pwm.stop()
+                self.stopped = True
+                self.logger.info('servo stopped')
 
     def setFineMovement(self):
         self.step = 0.25
 
     def setCoarseMovement(self):
         self.step = 0.5
-        
+
     def up(self):
         if(self.position <= self.endPosition):
+            self.start()
             self.position = self.position + self.step
             self.pwm.ChangeDutyCycle(self.position)
             time.sleep(self.wait)
-        logging.debug('servo up = %d' % self.position)
+            self.operationCount += 1
+            self.logger.info('[%s] servo up = %d', self.operationCount, self.position)
 
     def down(self):
         if(self.position >= self.startPosition):
+            self.start()
             self.position = self.position - self.step
             self.pwm.ChangeDutyCycle(self.position)
             time.sleep(self.wait)
-        logging.debug('servo down = %d' % self.position)
-
-    def stop(self):
-        'Call after if motion is no longer required'
-        self.pwm.stop()
-        logging.debug('servo stopped')
+            self.logger.info('servo down = %d' % self.position)
 
     def test(self):
         'Testing servo'
@@ -66,7 +97,7 @@ class Servo:
             self.stop()
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(created)f (%(threadName)-2s) %(message)s')
 
     try:
         servo = Servo()
