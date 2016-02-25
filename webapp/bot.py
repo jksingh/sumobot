@@ -56,7 +56,7 @@ class Bot:
                 self.logger.info('unrecogonized bot config %s' %config)
 
     def getConfig(self):
-        self.config
+        return self.config
 
     def test(self):
         'Testing bot'
@@ -66,6 +66,7 @@ class Bot:
             print 'get config (fine:coarse):',
             config = raw_input()
             self.setConfig(config)
+            print 'config set to ' + self.getConfig()
 
             ch = readchar.readchar()
             while(ch != 'Q'):

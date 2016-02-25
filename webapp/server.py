@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-from flask import Flask,render_template, abort
+from flask import Flask,render_template, abort,jsonify
 from flask import request, Response
 from werkzeug.serving import run_simple
 import ssl
@@ -26,7 +26,7 @@ def setBotConfig():
 @app.route('/robot/api/v1.0/getConfig', methods=['GET'])
 def getBotConfig():
     config = bot.getConfig()
-    return Response({config}, status=200, mimetype='application/json')
+    return jsonify({'config': config})
 
 @app.route('/robot/api/v1.0/move', methods=['POST'])
 def run_command():
