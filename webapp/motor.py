@@ -8,12 +8,12 @@ class DCMotor:
     def __init__(self, logger = logging):
 
         # constants
-        self.rightAPin = 11
-        self.rightBPin = 12
-        self.leftAPin = 15
-        self.leftBPin = 16
+        self.rightAPin = 21
+        self.rightBPin = 22
+        self.leftAPin = 23
+        self.leftBPin = 24
 
-        self.wait = 0.5
+        self.wait = 1
         self.logger = logger
 
         GPIO.setmode(GPIO.BOARD)
