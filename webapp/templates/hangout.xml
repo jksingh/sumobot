@@ -87,6 +87,35 @@ function init() {
       });
 }
 
+var moveFlag = true;
+$(document).on("keypress", function (e) {
+  // w = 87, a = 65, s = 83, d = 68
+  var keyMapping = {
+    '119' : "w", 
+    '97' : "a", 
+    '115': "s", 
+    '100' : "d",
+    "87" : "W",
+    "83" : "S",
+    "65" : "A",
+    "68" : "D"
+  }
+  if(keyMapping[e.keyCode] && moveFlag){
+    moveFlag = false;
+    $.ajax({
+      url: "/robot/api/v1.0/move",
+      type: "POST",
+      data: {ch : keyMapping[e.keyCode]},
+      success: function(data){
+        moveFlag = true;
+      },
+      error: function(data){
+        moveFlag = true;
+      }
+    })
+  }
+});
+
 // Wait for gadget to load.                                                       
 gadgets.util.registerOnLoadHandler(init);
 </script>
