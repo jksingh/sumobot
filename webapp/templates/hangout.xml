@@ -67,7 +67,7 @@
     border: 1px solid rgba(0,0,0,0.5);
     border-radius: 2px;
     color: rgba(0,0,0,0.8);
-    margin-top: 20px;
+    margin-top: 10px;
   }
   .hightlight{
     background-color: rgba(0,0,0,0.8);
@@ -81,6 +81,26 @@
   }
   .key-container{
     width: 300px;
+    overflow: auto;
+    margin: auto;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+  }
+
+  .ins-title{
+      margin: 20px 0 10px;
+  }
+  .ins{
+    font-size: 14px;
+    line-height: 26px;
+    color: rgba(0,0,0,0.6);
+    margin: auto;
+  }
+  .instruction-panel{
+    padding: 30px 0;
+    clear: both;
+    width: 300px;
+    margin: auto;
   }
 
 -->
@@ -99,14 +119,14 @@
   <div data-name="d" class="keys right pull-left" >d</div>
 </div>
 
-<div>
-  <h3>Press following letters to move the whole bot (It's case sensitive):</h3>
-  <div> W = move forward </div>
-  <div> S = move backwards </div>
-  <div> a/A = turn left </div>
-  <div> d/D = turn right </div>
-  <div> w = rotate camera upwards </div>
-  <div> s = rotate camera downwards </div>
+<div class="instruction-panel">
+  <div class="ins-title">Press following letters to move the whole bot (It's case sensitive):</div>
+  <div class="ins"> W = move forward </div>
+  <div class="ins"> S = move backwards </div>
+  <div class="ins"> a/A = turn left </div>
+  <div class="ins"> d/D = turn right </div>
+  <div class="ins"> w = rotate camera upwards </div>
+  <div class="ins"> s = rotate camera downwards </div>
 </div>
 
 <script>
