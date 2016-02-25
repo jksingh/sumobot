@@ -17,6 +17,8 @@ if [ "$_IP" ]; then
   printf "My IP address is %s\n" "$_IP"
 fi
 
+sudo /opt/vc/bin/tvservice -o
+
 python /home/pi/sumobot/webapp/server.py &
 /home/pi/sumobot/webapp/test_motors.py
 

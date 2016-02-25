@@ -60,9 +60,11 @@ class Servo:
 
     def setFineMovement(self):
         self.step = 0.25
+        self.logger.info('servo step set to = %f', self.step)
 
     def setCoarseMovement(self):
         self.step = 0.5
+        self.logger.info('servo step set to = %f', self.step)
 
     def up(self):
         if(self.position <= self.endPosition):
@@ -70,8 +72,7 @@ class Servo:
             self.position = self.position + self.step
             self.pwm.ChangeDutyCycle(self.position)
             time.sleep(self.wait)
-            self.operationCount += 1
-            self.logger.info('[%s] servo up = %d', self.operationCount, self.position)
+            self.logger.info('servo up = %f', self.position)
 
     def down(self):
         if(self.position >= self.startPosition):
@@ -79,12 +80,11 @@ class Servo:
             self.position = self.position - self.step
             self.pwm.ChangeDutyCycle(self.position)
             time.sleep(self.wait)
-            self.logger.info('servo down = %d' % self.position)
+            self.logger.info('servo down = %f' % self.position)
 
     def test(self):
         'Testing servo'
         try:
-            self.start()
             while(self.position <= self.endPosition):
                 self.up()
             while(self.position >= self.startPosition):
