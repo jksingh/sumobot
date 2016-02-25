@@ -46,7 +46,6 @@ def index():
     return render_template('index.html')
 
 if __name__ == '__main__':
-
     formatter = logging.Formatter("[%(asctime)s] [%(threadName)s:%(name)s] {%(module)s:%(funcName)s:%(lineno)d} %(levelname)s - %(message)s")
     handler = RotatingFileHandler('log/bot.log', maxBytes=10000000, backupCount=5)
     handler.setFormatter(formatter)
@@ -63,7 +62,7 @@ if __name__ == '__main__':
         bot.start()
         app.logger.info('***********STARTED SUMOBOT***********')
         context = ('./hangout.cert', './hangout.key')
-        app.run(host='0.0.0.0', port=8080, debug=False, ssl_context=context)
+        app.run(host='0.0.0.0', port=8080, debug=False, ssl_context="adhoc")
     finally:
         bot.stop()
         GPIO.cleanup()
