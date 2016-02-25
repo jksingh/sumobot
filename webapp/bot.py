@@ -12,7 +12,7 @@ class Bot:
 
     def __init__(self, logger = logging):
         self.logger = logger
-        self.servo = Servo()
+        self.servo = Servo(logger = logger)
         self.dcMotor = DCMotor()
         self.moveFuncs = {
             'W': self.dcMotor.forward,
@@ -56,7 +56,7 @@ class Bot:
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(created)f (%(threadName)-2s) %(message)s')
 
     try:
         bot = Bot()
