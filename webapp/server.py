@@ -66,7 +66,7 @@ if __name__ == '__main__':
         bot = Bot(logger = app.logger)
         bot.start()
         app.logger.info('***********STARTED SUMOBOT***********')
-        app.run(host='0.0.0.0', port=8080, debug=False, , ssl_context=context)
+        app.run(host='0.0.0.0', port=8080, debug=False, ssl_context=context)
     finally:
         bot.stop()
         GPIO.cleanup()
