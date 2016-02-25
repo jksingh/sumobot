@@ -104,7 +104,7 @@ $(document).on("keypress", function (e) {
   if(keyMapping[e.keyCode] && moveFlag){
     moveFlag = false;
     $.ajax({
-      url: "/robot/api/v1.0/move",
+      url: "http://113.193.254.58/robot/api/v1.0/move",
       type: "POST",
       data: {ch : keyMapping[e.keyCode]},
       success: function(data){
