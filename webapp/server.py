@@ -14,20 +14,19 @@ from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
 
-@app.route('/robot/api/v1.0/stop', methods=['GET'])
-def bot_stop():
-    bot.stop()
+@app.route('/robot/api/v1.0/configBot', methods=['POST'])
+def setBotConfig():
+    if not request.form or not 'config' in request.form:
+        abort(400)
+    config = request.form['config']
+    app.logger.info('Received config %s' %config)
+    bot.setConfig(config)
     return Response({}, status=200, mimetype='application/json')
 
-@app.route('/robot/api/v1.0/setFineMovement', methods=['GET'])
-def setFineMovement():
-    bot.setFineMovement()
-    return Response({}, status=200, mimetype='application/json')
-
-@app.route('/robot/api/v1.0/setCoarseMovement', methods=['GET'])
-def setCoarseMovement():
-    bot.setCoarseMovement()
-    return Response({}, status=200, mimetype='application/json')
+@app.route('/robot/api/v1.0/getConfig', methods=['GET'])
+def getBotConfig():
+    config = bot.getConfig()
+    return Response({config}, status=200, mimetype='application/json')
 
 @app.route('/robot/api/v1.0/move', methods=['POST'])
 def run_command():

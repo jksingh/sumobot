@@ -5,49 +5,59 @@ import logging
 class DCMotor:
     'Controls dc motor motor'
 
-    def __init__(self):
+    def __init__(self, logger = logging):
 
         # constants
         self.rightAPin = 11
         self.rightBPin = 12
         self.leftAPin = 15
         self.leftBPin = 16
+
         self.wait = 0.5
+        self.logger = logger
 
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(self.rightAPin, GPIO.OUT)
         GPIO.setup(self.rightBPin, GPIO.OUT)
         GPIO.setup(self.leftAPin, GPIO.OUT)
         GPIO.setup(self.leftBPin, GPIO.OUT)
-        logging.debug('dc motor started')
+        self.logger.info('dc motor started')
+
+    def setFineMovement(self):
+        self.wait = 0.25
+        self.logger.info('moter set to fine movement')
+
+    def setCoarseMovement(self):
+        self.wait = 0.5
+        self.logger.info('motor set to coarse movement')
 
     def forward(self):
         self.__rightForward()
         self.__leftForward()
         time.sleep(self.wait)
         self.__stop()
-        logging.debug('dc motor forward')
+        self.logger.info('dc motor forward')
 
     def backward(self):
         self.__rightBackward()
         self.__leftBackward()
         time.sleep(self.wait)
         self.__stop()
-        logging.debug('dc motor backward')
+        self.logger.info('dc motor backward')
 
     def right(self):
         self.__rightForward()
         self.__leftBackward()
         time.sleep(self.wait)
         self.__stop()
-        logging.debug('dc motor right')
+        self.logger.info('dc motor right')
 
     def left(self):
         self.__rightBackward()
         self.__leftForward()
         time.sleep(self.wait)
         self.__stop()
-        logging.debug('dc motor left')
+        self.logger.info('dc motor left')
 
     def test(self):
         'Testing dc motor'
@@ -84,7 +94,7 @@ class DCMotor:
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
+    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(created)f (%(threadName)-2s) %(message)s')
 
     try:
         dcMotor = DCMotor()

@@ -60,11 +60,11 @@ class Servo:
 
     def setFineMovement(self):
         self.step = 0.25
-        self.logger.info('servo step set to = %f', self.step)
+        self.logger.info('servo set to fine movement')
 
     def setCoarseMovement(self):
         self.step = 0.5
-        self.logger.info('servo step set to = %f', self.step)
+        self.logger.info('servo set to coarse movement')
 
     def up(self):
         if(self.position <= self.endPosition):
