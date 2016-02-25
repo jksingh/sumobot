@@ -2,7 +2,6 @@
 
 from flask import Flask,render_template, abort
 from flask import request, Response
-from OpenSSL import SSL
 
 from bot import Bot
 import RPi.GPIO as GPIO
