@@ -99,6 +99,16 @@
   <div data-name="d" class="keys right pull-left" >d</div>
 </div>
 
+<div>
+  <h3>Press following letters to move the whole bot (It's case sensitive):</h3>
+  <div> W = move forward </div>
+  <div> S = move backwards </div>
+  <div> a/A = turn left </div>
+  <div> d/D = turn right </div>
+  <div> w = rotate camera upwards </div>
+  <div> s = rotate camera downwards </div>
+</div>
+
 <script>
   var moveFlag = true;
   console.log("Initiating Key Press App")
@@ -139,7 +149,6 @@
     "68" : "D"
   }
   $(document).on("keypress", function (e) {
-    // w = 87, a = 65, s = 83, d = 68
     if(keyMapping[e.keyCode]){
       if(isCapslock(e)){
         $('.key-container').addClass('caps')
