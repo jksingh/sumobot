@@ -76,6 +76,8 @@
   .up{
     margin: auto;
   }
+  .left{border-right: 0;}
+  .down{border-right: 0;}
   .caps{
     text-transform: uppercase;
   }
