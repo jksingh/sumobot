@@ -88,6 +88,7 @@
 <body>
 
 <script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
 
 <h3>Simple Hangout App</h3>
 
@@ -140,7 +141,6 @@
   $(document).on("keypress", function (e) {
     // w = 87, a = 65, s = 83, d = 68
     if(keyMapping[e.keyCode]){
-      debugger
       if(isCapslock(e)){
         $('.key-container').addClass('caps')
       }else{
