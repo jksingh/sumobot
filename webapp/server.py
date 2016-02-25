@@ -63,9 +63,7 @@ if __name__ == '__main__':
         bot = Bot(logger = app.logger)
         bot.start()
         app.logger.info('***********STARTED SUMOBOT***********')
-        context = SSL.Context(SSL.SSLv23_METHOD)
-        context.use_privatekey_file('./hangout.key')
-        context.use_certificate_file('./hangout.cert')
+        context = ('./hangout.key', './hangout.cert')
         app.run(host='0.0.0.0', port=8080, debug=False, ssl_context=context)
     finally:
         bot.stop()
