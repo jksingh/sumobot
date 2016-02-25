@@ -7,13 +7,18 @@ import RPi.GPIO as GPIO
 import readchar
 import logging
 
+COARSE = 'coarse'
+FINE = 'fine'
+
 class Bot:
     'Controls bot'
+
 
     def __init__(self, logger = logging):
         self.logger = logger
         self.servo = Servo(logger = logger)
-        self.dcMotor = DCMotor()
+        self.dcMotor = DCMotor(logger = logger)
+        self.config = COARSE
         self.moveFuncs = {
             'W': self.dcMotor.forward,
             'S': self.dcMotor.backward,
@@ -37,16 +42,31 @@ class Bot:
         func = self.moveFuncs.get(ch, lambda: 'Unknown %s' %ch)
         return func()
 
-    def setServoFine(self):
-        self.servo.setFineMovement()
+    def setConfig(self, config):
+        if(self.config != config):
+            if(config == COARSE):
+                self.servo.setCoarseMovement()
+                self.dcMotor.setCoarseMovement()
+                self.config = config
+            elif(config == FINE):
+                self.servo.setFineMovement()
+                self.dcMotor.setFineMovement()
+                self.config = config
+            else:
+                self.logger.info('unrecogonized bot config %s' %config)
 
-    def setServoCoarse(self):
-        self.servo.setCoarseMovement()
+    def getConfig(self):
+        self.config
 
     def test(self):
         'Testing bot'
         try:
             self.start()
+
+            print 'get config (fine:coarse):',
+            config = raw_input()
+            self.setConfig(config)
+
             ch = readchar.readchar()
             while(ch != 'Q'):
                 self.move(ch)
