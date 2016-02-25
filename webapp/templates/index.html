@@ -3,52 +3,49 @@
 	<head>
 	<title>HangoutBot</title>
 	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<style>
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	body{
+		font-family: Sans-serif;
+	}
+	.header{
+		line-height: 50px;
+		background-color: black;
+		color: white;
+		font-size: 20px;
+		padding: 0 20px;
+	}
+	#hangout-btn{
+		font-size: 40px;
+		text-decoration: initial;
+		background: #26B14C;
+		color: #fff;
+		line-height: 100px;
+		padding: 20px;
+		margin: 0;
+		text-align: center;
+		border: 0;
+		transition: all 0.3s ease 0s;
+		border-radius: 2px;
+		display: block;
+		width: 400px;
+		margin: auto;
+		margin-top: 100px;
+	}
+	#hangout-btn:hover{
+		opacity: 0.9;
+	}
+	</style>
 	</head>
 <body>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
-	<div class="g-hangout" data-render="createhangout"></div>
-	<h1>
-		Bot
-		'W': forward,
-        'S': backward,
-        'A': left,
-        'D': right,
-
-        Camera
-		'w': up,
-		's': down,
-		'a': left,
-		'd': right
-	</h1>
+	<div class="header"> Sumobot </div>
+	<div class="main">
+		<a id="hangout-btn" href="https://plus.google.com/hangouts/_/calendar/c3Vtb25vaWRhQGdtYWlsLmNvbQ.iukn5843vgq8reccfu88nl6dck?authuser=0">Connect To Bot</a>
+	</div>
+	<div class="footer">  </div>
 </body>
-<script type="text/javascript">
-	var moveFlag = true;
-	$(document).on("keypress", function (e) {
-		// w = 87, a = 65, s = 83, d = 68
-		var keyMapping = {
-			'119' : "w", 
-			'97' : "a", 
-			'115': "s", 
-			'100' : "d",
-			"87" : "W",
-			"83" : "S",
-			"65" : "A",
-			"68" : "D"
-		}
-		if(keyMapping[e.keyCode] && moveFlag){
-			moveFlag = false;
-			$.ajax({
-				url: "/robot/api/v1.0/move",
-				type: "POST",
-				data: {ch : keyMapping[e.keyCode]},
-				success: function(data){
-					moveFlag = true;
-				},
-				error: function(data){
-					moveFlag = true;
-				}
-			})
-		}
-	});
-</script>
 </html>
