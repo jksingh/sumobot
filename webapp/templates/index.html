@@ -19,6 +19,7 @@
 		font-size: 20px;
 		padding: 0 20px;
 	}
+	.pull-left{float: left;}
 	#hangout-btn{
 		font-size: 40px;
 		text-decoration: initial;
@@ -39,6 +40,29 @@
 	#hangout-btn:hover{
 		opacity: 0.9;
 	}
+	.keys{
+		width: 100px;
+		text-align: center;
+		padding: 10px;
+		font-size: 30px;
+		border: 1px solid rgba(0,0,0,0.5);
+		border-radius: 2px;
+		color: rgba(0,0,0,0.8);
+		margin-top: 20px;
+	}
+	.hightlight{
+		background-color: rgba(0,0,0,0.8);
+		color: white;
+	}
+	.up{
+		margin: auto;
+	}
+	.caps{
+		text-transform: uppercase;
+	}
+	.key-container{
+		width: 300px;
+	}
 	</style>
 	</head>
 <body>
@@ -46,6 +70,83 @@
 	<div class="main">
 		<a id="hangout-btn" href="https://plus.google.com/hangouts/_/calendar/c3Vtb25vaWRhQGdtYWlsLmNvbQ.iukn5843vgq8reccfu88nl6dck?authuser=0">Connect To Bot</a>
 	</div>
+<!-- 	<div class='key-container'>
+		<div data-name="w" class="keys up" >w</div>
+		<div data-name="a" class="keys left pull-left" >a</div>
+		<div data-name="s" class="keys down pull-left" >s</div>
+		<div data-name="d" class="keys right pull-left" >d</div>
+	</div> -->
 	<div class="footer">  </div>
+	<script type="text/javascript">
+	// var moveFlag = true;
+	// console.log("Initiating Key Press App")
+	
+	// function isCapslock(e){
+	//     e = (e) ? e : window.event;
+	//     var charCode = false;
+	//     if (e.which) {
+	//         charCode = e.which;
+	//     } else if (e.keyCode) {
+	//         charCode = e.keyCode;
+	//     }
+
+	//     var shifton = false;
+	//     if (e.shiftKey) {
+	//         shifton = e.shiftKey;
+	//     } else if (e.modifiers) {
+	//         shifton = !!(e.modifiers & 4);
+	//     }
+
+	//     if (charCode >= 97 && charCode <= 122 && shifton) {
+	//         return true;
+	//     }
+
+	//     if (charCode >= 65 && charCode <= 90 && !shifton) {
+	//         return true;
+	//     }
+
+	//     return false;
+	// }
+	// var keyMapping = {
+	// 	'119' : "w", 
+	// 	'97' : "a", 
+	// 	'115': "s", 
+	// 	'100' : "d",
+	// 	"87" : "W",
+	// 	"83" : "S",
+	// 	"65" : "A",
+	// 	"68" : "D"
+	// }
+	// $(document).on("keypress", function (e) {
+	//   // w = 87, a = 65, s = 83, d = 68
+	//   if(keyMapping[e.keyCode]){
+	//   	debugger
+	//   	if(isCapslock(e)){
+	//   		$('.key-container').addClass('caps')
+	//   	}else{
+	//   		$('.key-container').removeClass('caps')
+	//   	}
+	//   	var str = '.keys[data-name=' + keyMapping[e.keyCode].toLowerCase() + ']'
+	//   	$(str).addClass('hightlight');
+	//   }
+	//   if(keyMapping[e.keyCode] && moveFlag){
+	//     moveFlag = false;
+	//     $.ajax({
+	//       url: "//113.193.254.58/robot/api/v1.0/move",
+	//       type: "POST",
+	//       data: {ch : keyMapping[e.keyCode]},
+	//       success: function(data){
+	//         moveFlag = true;
+	//       },
+	//       error: function(data){
+	//         moveFlag = true;
+	//       }
+	//     })
+	//   }
+	// });
+	// $(document).on("keyup", function (e) {
+	// 	$('.keys').removeClass('hightlight');
+	// })
+	</script>
 </body>
 </html>
