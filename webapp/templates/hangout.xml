@@ -17,80 +17,113 @@
 		<Require feature="views" />
 		<Require feature="locked-domain" />
 	</ModulePrefs>
-	<Content type="html"><![CDATA[     
-
+	<Content type="html"><![CDATA[
 <html>
-<style type="text/css">
-<!--
-.button {
-  border-radius: 3px;
-  -moz-border-radius: 3px;
-  background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ddd));
-  background: -moz-linear-gradient(top, #fff, #ddd);  
-  border: 1px solid #bbb;
-}
-
-.button:active {
-	background: -webkit-gradient(linear, left top, left bottom, from(#aaa), to(#333)); 
-	background: -moz-linear-gradient(bottom, #ddd, #aaa); }
-
--->
-</style>
-<body>
-
-<script src="//plus.google.com/hangouts/_/api/v1/hangout.js"></script>
-
-<h3>Simple Hangout App</h3>
-
-<p>
-<input class="button" type="button" value="Show participants!" id="showParticipants" 
-    style="visibility:hidden;"
-    onClick="showParticipants()"/>
-</p>
-
-<div id="participantsDiv"></div>
-
-<hr>
-
-<p><a href="http://developers.google.com/+/hangouts/getting-started">Read the docs</a> to learn more about developing hangouts!</a></p>
-<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script>
-function showParticipants() {
-  var participants = gapi.hangout.getParticipants();
-
-  var retVal = '<p>Participants: </p><ul>';
-
-  for (var index in participants) {
-    var participant = participants[index];
-
-    if (!participant.person) {
-      retVal += '<li>A participant not running this app</li>';
-    }
-    retVal += '<li>' + participant.person.displayName + '</li>';
+  <head>
+  <title>HangoutBot</title>
+  <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
+  body{
+    font-family: Sans-serif;
+  }
+  .header{
+    line-height: 50px;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    padding: 0 20px;
+  }
+  .pull-left{float: left;}
+  #hangout-btn{
+    font-size: 40px;
+    text-decoration: initial;
+    background: #26B14C;
+    color: #fff;
+    line-height: 100px;
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+    border: 0;
+    transition: all 0.3s ease 0s;
+    border-radius: 2px;
+    display: block;
+    width: 400px;
+    margin: auto;
+    margin-top: 100px;
+  }
+  #hangout-btn:hover{
+    opacity: 0.9;
+  }
+  .keys{
+    width: 100px;
+    text-align: center;
+    padding: 10px;
+    font-size: 30px;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 2px;
+    color: rgba(0,0,0,0.8);
+    margin-top: 20px;
+  }
+  .hightlight{
+    background-color: rgba(0,0,0,0.8);
+    color: white;
+  }
+  .up{
+    margin: auto;
+  }
+  .caps{
+    text-transform: uppercase;
+  }
+  .key-container{
+    width: 300px;
+  }
+  </style>
+  </head>
+<body>
+  <div class="header"> Sumobot </div>
+  <div class="main">
+    <div class='key-container'>
+      <div data-name="w" class="keys up" >w</div>
+      <div data-name="a" class="keys left pull-left" >a</div>
+      <div data-name="s" class="keys down pull-left" >s</div>
+      <div data-name="d" class="keys right pull-left" >d</div>
+    </div>
+  </div>  
+  <script type="text/javascript">
+  var moveFlag = true;
+  console.log("Initiating Key Press App")
+  
+  function isCapslock(e){
+      e = (e) ? e : window.event;
+      var charCode = false;
+      if (e.which) {
+          charCode = e.which;
+      } else if (e.keyCode) {
+          charCode = e.keyCode;
+      }
 
-  retVal += '</ul>';
+      var shifton = false;
+      if (e.shiftKey) {
+          shifton = e.shiftKey;
+      } else if (e.modifiers) {
+          shifton = !!(e.modifiers & 4);
+      }
 
-  var div = document.getElementById('participantsDiv');
+      if (charCode >= 97 && charCode <= 122 && shifton) {
+          return true;
+      }
 
-  div.innerHTML = retVal;
-}
+      if (charCode >= 65 && charCode <= 90 && !shifton) {
+          return true;
+      }
 
-function init() {
-  // When API is ready...                                                         
-  gapi.hangout.onApiReady.add(
-      function(eventObj) {
-        if (eventObj.isApiReady) {
-          document.getElementById('showParticipants')
-            .style.visibility = 'visible';
-        }
-      });
-}
-
-var moveFlag = true;
-console.log("Initiating Key Press App")
-$(document).on("keypress", function (e) {
-  // w = 87, a = 65, s = 83, d = 68
+      return false;
+  }
   var keyMapping = {
     '119' : "w", 
     '97' : "a", 
@@ -101,25 +134,37 @@ $(document).on("keypress", function (e) {
     "65" : "A",
     "68" : "D"
   }
-  if(keyMapping[e.keyCode] && moveFlag){
-    moveFlag = false;
-    $.ajax({
-      url: "//113.193.254.58/robot/api/v1.0/move",
-      type: "POST",
-      data: {ch : keyMapping[e.keyCode]},
-      success: function(data){
-        moveFlag = true;
-      },
-      error: function(data){
-        moveFlag = true;
+  $(document).on("keypress", function (e) {
+    // w = 87, a = 65, s = 83, d = 68
+    if(keyMapping[e.keyCode]){
+      debugger
+      if(isCapslock(e)){
+        $('.key-container').addClass('caps')
+      }else{
+        $('.key-container').removeClass('caps')
       }
-    })
-  }
-});
-
-// Wait for gadget to load.                                                       
-gadgets.util.registerOnLoadHandler(init);
-</script>
+      var str = '.keys[data-name=' + keyMapping[e.keyCode].toLowerCase() + ']'
+      $(str).addClass('hightlight');
+    }
+    if(keyMapping[e.keyCode] && moveFlag){
+      moveFlag = false;
+      $.ajax({
+        url: "//113.193.254.58/robot/api/v1.0/move",
+        type: "POST",
+        data: {ch : keyMapping[e.keyCode]},
+        success: function(data){
+          moveFlag = true;
+        },
+        error: function(data){
+          moveFlag = true;
+        }
+      })
+    }
+  });
+  $(document).on("keyup", function (e) {
+    $('.keys').removeClass('hightlight');
+  })
+  </script>
 </body>
 ]]>
 </Content>
