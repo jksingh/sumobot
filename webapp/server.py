@@ -2,6 +2,10 @@
 
 from flask import Flask,render_template, abort
 from flask import request, Response
+from OpenSSL import SSL
+context = SSL.Context(SSL.SSLv23_METHOD)
+context.use_privatekey_file('hangout.key')
+context.use_certificate_file('hangout.crt')
 
 from bot import Bot
 import RPi.GPIO as GPIO
@@ -11,7 +15,6 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
-
 
 @app.route('/robot/api/v1.0/stop', methods=['GET'])
 def bot_stop():
@@ -63,7 +66,7 @@ if __name__ == '__main__':
         bot = Bot(logger = app.logger)
         bot.start()
         app.logger.info('***********STARTED SUMOBOT***********')
-        app.run(host='0.0.0.0', port=8080, debug=False)
+        app.run(host='0.0.0.0', port=8080, debug=False, , ssl_context=context)
     finally:
         bot.stop()
         GPIO.cleanup()
