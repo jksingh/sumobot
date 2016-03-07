@@ -19,7 +19,7 @@ fi
 
 sudo /opt/vc/bin/tvservice -o
 
+# /home/pi/sumobot/webapp/test_motors.py
 python /home/pi/sumobot/webapp/server.py &
-/home/pi/sumobot/webapp/test_motors.py
 
 exit 0
