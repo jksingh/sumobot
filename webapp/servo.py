@@ -13,9 +13,9 @@ class Servo:
         self.startPosition = 4
         self.endPosition = 8
         self.frontPosition = 5
-        self.step = 0.5
+        self.step = 0.25
         self.wait = 0.5
-        self.sleepAfter = 5
+        self.sleepAfter = 30
 
         self.position = self.frontPosition
 

@@ -18,7 +18,8 @@ class Bot:
         self.logger = logger
         self.servo = Servo(logger = logger)
         self.dcMotor = DCMotor(logger = logger)
-        self.config = COARSE
+        self.config = ""
+        self.setConfig(FINE)
         self.moveFuncs = {
             'W': self.dcMotor.forward,
             'S': self.dcMotor.backward,
@@ -63,7 +64,7 @@ class Bot:
         try:
             self.start()
 
-            print 'get config (fine:coarse):',
+            print 'get config ([fine]:coarse):',
             config = raw_input()
             self.setConfig(config)
             print 'config set to ' + self.getConfig()
@@ -77,7 +78,7 @@ class Bot:
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(created)f (%(threadName)-2s) %(message)s')
+    logging.basicConfig(level=logging.INFO, format='%(asctime)s %(created)f (%(threadName)-2s) %(message)s')
 
     try:
         bot = Bot()

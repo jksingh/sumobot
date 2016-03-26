@@ -13,7 +13,7 @@ class DCMotor:
         self.leftAPin = 23
         self.leftBPin = 24
 
-        self.wait = 0.5
+        self.wait = 0.25
         self.logger = logger
 
         GPIO.setmode(GPIO.BOARD)
