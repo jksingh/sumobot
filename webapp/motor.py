@@ -8,10 +8,10 @@ class DCMotor:
     def __init__(self, logger = logging):
 
         # constants
-        self.rightAPin = 21
-        self.rightBPin = 22
-        self.leftAPin = 23
-        self.leftBPin = 24
+        self.leftAPin = 21
+        self.leftBPin = 19
+        self.rightAPin = 23
+        self.rightBPin = 24
 
         self.wait = 0.25
         self.logger = logger
@@ -46,15 +46,15 @@ class DCMotor:
         self.logger.info('dc motor backward')
 
     def right(self):
-        self.__rightForward()
-        self.__leftBackward()
+        self.__leftForward()
+        self.__rightBackward()
         time.sleep(self.wait)
         self.__stop()
         self.logger.info('dc motor right')
 
     def left(self):
-        self.__rightBackward()
-        self.__leftForward()
+        self.__leftBackward()
+        self.__rightForward()
         time.sleep(self.wait)
         self.__stop()
         self.logger.info('dc motor left')
